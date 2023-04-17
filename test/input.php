@@ -39,6 +39,7 @@
         ehco "<th>나이</th>";
         echo "<th>성별</th>";
         echo "<th>키</th>";
+        echo "<th>삭제</th>";
         echo "</tr>";
 
     while ( $row = mysql_fetch_assoc($result) ){
@@ -48,8 +49,10 @@
         echo "<td>". $row['age']. "</td>";
         echo "<td>". $row['gender']. "</td>";
         echo "<td>". $row['heghit']. "</td>";
+        echo "<td><a href=delete.php?num=".$row['num'].">[삭제]</a></td>";
+        echo "<td><a href=update.php?num=".$row['num'].">[수정]</a></td>";
         echo "</tr>";
-
+        echo "</table>";
 
          echo $row["name"]. " ,". $row["age"]. ",". 
          $row["gender"]. ",". $row["heghit"]. "<BR>" ;
