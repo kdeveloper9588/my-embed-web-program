@@ -1,3 +1,5 @@
+<?php include "header.php"; ?>
+
 <form method=post action=view.php>
 <select name="did">
     <option value="none">=== 선택 ===</option>
@@ -36,16 +38,26 @@ if(isset($_POST['did'])) {
    //쿼리를 실행한다
    $result = mysqli_query($conn, $query);
    //결과를 출력한다
+
  
    echo "<table border=1 width=500>"; 
-      echo "<tr>";
+    echo "<tr>";
     echo "<th>번호</th>";
     echo "<th>디바이스아이디</th>";
     echo "<th>온도</th>";
     echo "<th>습도</th>";
     echo "<th>업로드시간</th>";
     echo "</tr>";
-   while($row = mysqli_fetch_assoc($result)){
+    $i = 0;
+   while($row = mysqli_fetch_assoc($result)){//db에서 가져온 값을 한 레코드로 때서 키 값으로 조회
+    $mylabel[$i] = $row['date'];
+    $mytemp[$i] = $row['temp'];
+    $myhumi[$i] = $row['humi'];
+    if($i == 0){
+      $mytemp2 = $row['temp'];
+      $myhumi2 = $row['humi'];
+    }
+    $i ++;
     echo "<tr>";
     echo "<td>".$row['num']."</td>";
     echo "<td>".$row['did']."</td>";
@@ -56,5 +68,17 @@ if(isset($_POST['did'])) {
   }
 
   echo "</table>";
-   
+  echo "<table border = 1 width = 600>";
+  echo "<tr align = center><td>";
+  include "temp.php";
+  echo "</td><td>";
+  include "humi.php";
+  echo "</td></tr>";
+  echo "<tr><td colspan = 2 align = center>";
+   //여기에 그래프를 넣겠다
+  include "graph.php";
+  echo "</td></tr>";
+  echo "</table>";
+
 ?>
+<?php include "footer.php"; ?>
